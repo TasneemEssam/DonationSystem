@@ -42,7 +42,7 @@ private Date donationDate;
 
     @Override
     public String toString() {
-        return "Donation{" +
+        return "\nDonation{" +
                 "donationID='" + donationID + '\'' +
                 ", donor=" + donor +
                 ", event=" + event +

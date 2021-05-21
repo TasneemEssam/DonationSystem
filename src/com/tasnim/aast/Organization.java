@@ -1,13 +1,30 @@
 package com.tasnim.aast;
 
-public class Organization extends  Donor {
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class Organization {
 
     private  String organizationName;
     private  String firstNameContact;
     private  String lastNameContact;
     private  String description;
 
-    public Organization(String organizationName) {
+
+    public Organization(String organizationName, Connection connection) {
+        String query = " insert into donors (organizationName, type) values (?, ?)";
+        PreparedStatement preparedStmt = null;
+        try {
+            preparedStmt = connection.prepareStatement(query);
+            preparedStmt.setString (1, organizationName);
+            preparedStmt.setString   (2, "Organization");
+            preparedStmt.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         this.organizationName = organizationName;
     }
 
@@ -18,8 +35,8 @@ public class Organization extends  Donor {
         this.description = description;
     }
 
-    public Organization(String street, String city, String stateName, String phone, String email, String organizationName, String firstNameContact, String lastNameContact, String description) {
-        super(street, city, stateName, phone, email);
+    public Organization(String street, String city, String stateName, String phone, String email, String organizationName,
+                        String firstNameContact, String lastNameContact, String description) {
         this.organizationName = organizationName;
         this.firstNameContact = firstNameContact;
         this.lastNameContact = lastNameContact;
@@ -31,41 +48,44 @@ public class Organization extends  Donor {
     }
 
     public void setOrganizationName(String organizationName) {
+
         this.organizationName = organizationName;
     }
 
     public String getFirstNameContact() {
+
         return firstNameContact;
     }
 
-    public void setFirstNameContact(String firstNameContact) {
+    public void setFirstNameContact(String firstNameContact)
+    {
         this.firstNameContact = firstNameContact;
     }
 
-    public String getLastNameContact() {
+    public String getLastNameContact()
+    {
         return lastNameContact;
     }
 
-    public void setLastNameContact(String lastNameContact) {
+    public void setLastNameContact(String lastNameContact)
+    {
         this.lastNameContact = lastNameContact;
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description)
+    {
         this.description = description;
     }
 
     @Override
-    public String donorIdentity() {
-        return this.organizationName +" "+ this.getDonorID();
-    }
-
-    @Override
     public String toString() {
-        return super.toString()+"Organization{" +
+        return super.toString()+"\n"+
+                "Organization{" +
                 "organizationName='" + organizationName + '\'' +
                 ", firstNameContact='" + firstNameContact + '\'' +
                 ", lastNameContact='" + lastNameContact + '\'' +
